@@ -3,7 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SILIC 2.0 — Processo Digital • Painel Documental (Finalizado)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <img src="logo-caixa.svg" alt="Logo Caixa" class="logo">
+      <div class="header-title">
+        <h1>SILIC 2.0</h1>
+        <span class="subtitle">Protótipo - Processos Digitais</span>
+      </div>
+    </div>
+    <button class="back-btn" onclick="voltarAoPortal()">
+      <span class="arrow">&#8592;</span> Voltar ao Portal
+    </button>
+  </header>
+  <script src="script.js"></script>
+
+</body>
+</html>
   <style>
     :root{
       --brand:#0a67c0; --brand-600:#0d5aaa; --text:#0f172a; --muted:#475569;
@@ -63,16 +81,6 @@
   </style>
 </head>
 <body>
-  <div class="portal-shell"><div class="inner"><div class="logo"><div class="mark" aria-hidden="true"></div><strong>Portal SILIC 2.0</strong></div><nav><a href="https://osvaldojeronymo.github.io/silic-portal-imoveis/">Voltar ao Portal</a></nav></div></div>
-  <header class="appbar" role="banner">
-    <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <div>
-        <h1>Processo Digital <small class="muted">— SILIC 2.0 (Painel Documental)</small></h1>
-        <small class="muted">Referência de processo <strong>finalizado</strong> — foco em rastreabilidade e completude documental</small>
-      </div>
-    </div>
-  </header>
 
   <main class="shell">
     <section class="process-header">
@@ -119,7 +127,7 @@
   <script type="module">
     const qs = new URLSearchParams(location.search); if(qs.get('theme')==='portal') document.documentElement.classList.add('portal-theme');
     const tipos = ['SOLICITAÇÃO DE DOCUMENTAÇÃO','DOCUMENTOS RECEBIDOS','OBSERVAÇÕES','DOCUMENTOS COMPLEMENTARES','MINUTA','ETP','TR','ATA','PARECER'];
-    const sigilos = ['Público','Inteno','Confidencial'];
+    const sigilos = ['Público','Interno','Confidencial'];
     const finalStatuses = ['Assinado','Publicado','Cancelado','Arquivado','Substituído'];
     const rand = a => a[Math.floor(Math.random()*a.length)];
     const pad = n => String(n).padStart(2,'0');
