@@ -46,3 +46,17 @@ body {
   margin-right: 8px;
   font-size: 1.2em;
 }
+.grid-2 {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  padding: 0 24px;
+  margin-top: 20px;
+}
+.full-width-box {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}

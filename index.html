@@ -84,12 +84,30 @@
 
   <main class="shell">
     <section class="process-header">
-  <div class="card"><div class="hd">Identificação</div><div class="bd"><div><strong>Nº Processo:</strong> <span id="nProcesso">2103/2024</span></div><div><strong>Protocolo:</strong> <span id="nProtocolo">64202</span></div><div><strong>Data do Protocolo:</strong> <span id="dataProtocolo">04/02/2025</span></div><div><strong>Descrição do Objeto:</strong> <span id="descricaoObjeto">Contratação de serviços de tecnologia da informação para suporte ao SILIC 2.0</span></div></div></div>
-      <div class="card"><div class="hd">Situação</div><div class="bd"><div><strong>Modalidade:</strong> <span id="modalidade">Dispensa de Licitação</span></div><div><strong>Situação do Protocolo:</strong> <span id="situacao">Contratada</span></div><div><strong>Vigência:</strong> <span id="vigencia">04/02/2025 — 03/02/2030</span></div></div></div>
-      <div class="card"><div class="hd">Valores</div><div class="bd"><div><strong>Valor total:</strong> <span id="valor">R$ 2.460.000,00</span></div><div><strong>Sigilo:</strong> <span class="chip secret">Público</span></div><div><strong>Gestor Demandante:</strong> <span id="gestor">7074 - CELOG</span></div></div></div>
+  <div class="card"><div class="hd">Identificação</div><div class="bd">
+  <div><strong>Protocolo:</strong> <span id="nProtocolo">64202</span></div>
+  <div><strong>Data do Protocolo:</strong> <span id="dataProtocolo">04/02/2025</span></div>
+  <div><strong>Nº Processo:</strong> <span id="nProcesso">2103/2024</span></div>
+  <div><strong>Descrição do Objeto:</strong> <span id="descricaoObjeto">Contratação de serviços de tecnologia da informação para suporte ao SILIC 2.0</span></div>
+  <div><strong>Valor total:</strong> <span id="valorIdentificacao">R$ 2.460.000,00</span></div>
+  </div></div>
+  <div class="card"><div class="hd">Detalhes do Protocolo</div><div class="bd">
+  <div><strong>Vigência:</strong> <span id="vigencia">04/02/2025 — 03/02/2030</span></div>
+  <div><strong>Situação do Protocolo:</strong> <span id="situacao">Contratada</span></div>
+  <div><strong>Modalidade:</strong> <span id="modalidade">Dispensa de Licitação</span></div>
+  <div><strong>Modalidade subgrupo:</strong> <span id="modalidadeSubgrupo">Serviços de TI</span></div>
+  <div><strong>Gestor Demandante:</strong> <span id="gestor">7074 - CELOG</span></div>
+  <div><strong>Equipe Remota:</strong> <span id="equipeRemota">Equipe de Apoio SILIC</span></div>
+  </div></div>
+  <div class="card"><div class="hd">Classificação/Responsáveis</div><div class="bd">
+  <div><strong>Classificação:</strong> <span class="chip secret">Público</span></div>
+  <div><strong>Usuário Demandante:</strong> <span id="usuarioDemandante">C088937 — MARCIA M. F. SILVA</span></div>
+  <div><strong>Usuário Responsável:</strong> <span id="usuarioResponsavel">C049088 — WILLIAN F. DA SILVA</span></div>
+      </div></div>
     </section>
 
-    <section class="card"><div class="hd">Filtros rápidos</div><div class="bd"><div class="filters">
+    <div class="full-width-box">
+      <section class="card"><div class="hd">Filtros rápidos</div><div class="bd"><div class="filters">
       <div class="group"><label>Período</label><select id="fPeriodo"><option value="all">Todos</option><option>Últimos 30 dias</option><option>Últimos 90 dias</option></select></div>
       <div class="group"><label>Usuário</label><input id="fUsuario" placeholder="Matrícula/nome"/></div>
       <div class="group"><label>Tipo de Documento</label><select id="fTipo"><option value="all">Todos</option></select></div>
@@ -97,6 +115,7 @@
       <div class="group"><label>Sigiloso</label><select id="fSigilo"><option value="all">Todos</option><option>Público</option><option>Interno</option><option>Confidencial</option></select></div>
       <div class="actions"><button class="btn" id="btnLimpar">Limpar</button><button class="btn primary" id="btnAplicar">Aplicar</button></div>
     </div></div></section>
+  </div>
 
     <div class="grid-2">
       <section class="card" aria-label="Documentos do processo">
