@@ -57,3 +57,7 @@ function renderContratosTable() {
 window.addEventListener('DOMContentLoaded', () => {
   renderContratosTable();
 });
+
+
+// shim para evitar erros se applyFilters não existir
+window.applyFilters = window.applyFilters || function(){};

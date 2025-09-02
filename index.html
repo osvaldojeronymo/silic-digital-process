@@ -61,18 +61,57 @@
 
     <!-- Filtros rápidos fixos abaixo da appbar -->
     <section class="card sticky-filters">
-      <div class="hd">Filtros rápidos</div>
-      <div class="bd">
-        <div class="filters">
-          <div class="group"><label>Período</label><select id="fPeriodo"><option value="all">Todos</option><option>Últimos 30 dias</option><option>Últimos 90 dias</option></select></div>
-          <div class="group"><label>Usuário</label><input id="fUsuario" placeholder="Matrícula/nome"/></div>
-          <div class="group"><label>Tipo de Documento</label><select id="fTipo"><option value="all">Todos</option></select></div>
-          <div class="group"><label>Status</label><select id="fStatus"><option value="all">Todos</option><option>Assinado</option><option>Publicado</option><option>Cancelado</option><option>Arquivado</option><option>Substituído</option></select></div>
-          <div class="group"><label>Sigiloso</label><select id="fSigilo"><option value="all">Todos</option><option>Público</option><option>Interno</option><option>Confidencial</option></select></div>
-          <div class="actions"><button class="btn" id="btnLimpar">Limpar</button><button class="btn primary" id="btnAplicar">Aplicar</button></div>
+  <div class="hd">Filtros rápidos</div>
+  <div class="bd">
+    <div class="active-filters" id="activeFilters" hidden></div>
+      <div class="filters" style="display: flex; flex-direction: column; width: 100%; gap: 4px;">
+        <div style="display: flex; width: 100%; gap: 8px; align-items: flex-end;">
+          <div class="group field--range" style="flex: 1; min-width: 120px;">
+            <label>Data do protocolo</label>
+            <div class="range-line">
+              <input type="date" id="fDataInicio" aria-label="Data inicial" />
+              <span class="range-sep">até</span>
+              <input type="date" id="fDataFim" aria-label="Data final" />
+            </div>
+          </div>
+          <div class="group" style="flex: 1; min-width: 120px;">
+            <label>Ação</label>
+            <select id="fAcao">
+              <option value="">Todas</option>
+              <option>Inclusão</option>
+              <option>Alteração</option>
+              <option>Alteração de status</option>
+              <option>Exclusão</option>
+            </select>
+          </div>
+          <div class="group" style="flex: 1; min-width: 120px;">
+            <label>Classificação</label>
+            <select id="fClassificacao">
+              <option value="">Todos</option>
+              <option>Público</option>
+              <option>Externo.Confidencial</option>
+              <option>Interno.Todos</option>
+              <option>Interno.Caixa</option>
+              <option>Interno.Confidencial</option>
+              <option>Externo.Restrito</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: flex; width: 100%; gap: 8px; align-items: flex-end;">
+          <div class="group field--full" style="flex: 2; min-width: 180px;">
+            <label>Descrição do Objeto</label>
+            <input id="fDescricaoObjeto" placeholder="Buscar por palavras do objeto" />
+          </div>
+          <div style="flex: 1; display: flex; justify-content: flex-end; gap: 8px;">
+            <button class="btn" id="btnLimpar">Limpar</button>
+            <button class="btn primary" id="btnConsultar">Consultar</button>
+            <button class="btn ghost" id="btnAvancados" style="background-color: #FF8300; color: #fff; border: none;">Filtros avançados</button>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <!-- Abas com painéis roláveis -->
     <section class="tabs card">
@@ -181,6 +220,95 @@
     }
   });
   </script>
+
+<script>
+  // abre/fecha avançados
+  (function(){
+    const btn = document.getElementById('btnAvancados');
+    const panel = document.getElementById('painelAvancados');
+    if(!btn || !panel) return;
+    btn.addEventListener('click', ()=>{
+      const open = panel.hasAttribute('hidden');
+      if(open) panel.removeAttribute('hidden'); else panel.setAttribute('hidden','');
+      btn.setAttribute('aria-expanded', String(open));
+      btn.innerHTML = open ? 'Filtros avançados ▴' : 'Filtros avançados ▾';
+    });
+  })();
+
+  // debounce simples para descrição do objeto
+  (function(){
+    const inp = document.getElementById('fDescricaoObjeto');
+    if(!inp) return;
+    let t=null;
+    inp.addEventListener('input', ()=>{
+      clearTimeout(t);
+      t = setTimeout(()=>{
+        if(typeof window.applyFilters==='function') window.applyFilters();
+        renderActivePills();
+      }, 400);
+    });
+  })();
+
+  // pílulas (demonstração: gera a partir de alguns campos)
+  function renderActivePills(){
+    const host = document.getElementById('activeFilters');
+    if(!host) return;
+    const fields = [
+      ['Descrição', document.getElementById('fDescricaoObjeto')?.value],
+      ['Ação', document.getElementById('fAcao')?.value],
+      ['Classificação', document.getElementById('fClassificacao')?.value],
+      ['Data', joinRange(document.getElementById('fDataInicio')?.value, document.getElementById('fDataFim')?.value)],
+      ['Valor', joinRange(document.getElementById('faValorDe')?.value, document.getElementById('faValorAte')?.value)],
+      ['Vigência', joinRange(document.getElementById('faVigenciaDe')?.value, document.getElementById('faVigenciaAte')?.value)],
+    ].filter(([,v]) => v && String(v).trim() !== '' && v !== 'Todos');
+
+    host.innerHTML = '';
+    if(!fields.length){ host.setAttribute('hidden',''); return; }
+    host.removeAttribute('hidden');
+
+    fields.forEach(([label, val])=>{
+      const el = document.createElement('span');
+      el.className = 'pill';
+      el.innerHTML = `<b>${label}:</b> <span>${escapeHtml(val)}</span> <button aria-label="Remover ${label}">×</button>`;
+      el.querySelector('button').addEventListener('click', ()=>{
+        switch(label){
+          case 'Descrição': document.getElementById('fDescricaoObjeto').value=''; break;
+          case 'Ação': document.getElementById('fAcao').selectedIndex=0; break;
+          case 'Classificação': document.getElementById('fClassificacao').selectedIndex=0; break;
+          case 'Data': document.getElementById('fDataInicio').value=''; document.getElementById('fDataFim').value=''; break;
+          case 'Valor': document.getElementById('faValorDe').value=''; document.getElementById('faValorAte').value=''; break;
+          case 'Vigência': document.getElementById('faVigenciaDe').value=''; document.getElementById('faVigenciaAte').value=''; break;
+        }
+        if(typeof window.applyFilters==='function') window.applyFilters();
+        renderActivePills();
+      });
+      host.appendChild(el);
+    });
+
+    function joinRange(a,b){
+      a = (a||'').trim(); b=(b||'').trim();
+      if(!a && !b) return '';
+      if(a && b) return `${a} — ${b}`;
+      return a || b;
+    }
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+  }
+
+  // integra com seus botões já existentes
+  document.getElementById('btnAplicar')?.addEventListener('click', ()=>{
+    if(typeof window.applyFilters==='function') window.applyFilters();
+    renderActivePills();
+  });
+  document.getElementById('btnLimpar')?.addEventListener('click', ()=>{
+    document.querySelectorAll('.filters input, .filters select, .filters-advanced input, .filters-advanced select')
+      .forEach(el => { if(el.type==='checkbox') el.checked=false; else { if('selectedIndex' in el) el.selectedIndex=0; el.value=''; } });
+    if(typeof window.applyFilters==='function') window.applyFilters();
+    renderActivePills();
+  });
+
+  // inicial
+  renderActivePills();
+</script>
+
 </body>
 </html>
-
