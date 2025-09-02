@@ -1,7 +1,51 @@
+/* ==================================================================
+   SILIC 2.0 — styles.css (revamp)
+   - Foco: legibilidade, ritmo visual, consistência nos cards e tabelas
+   - Safe: mantém classes existentes; apenas refina e amplia estilos
+   ================================================================== */
+
+/* ---------- Design tokens ---------- */
+:root{
+  --brand:#0a67c0;
+  --brand-600:#0d5aaa;
+  --text:#0f172a;
+  --muted:#475569;
+  --bg:#f7fafc;
+  --surface:#ffffff;
+  --border:#e2e8f0;
+  --shadow:0 8px 24px rgba(2,6,23,.08);
+  --radius:18px;
+
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:20px; --space-6:24px;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after{ box-sizing: border-box; }
+
+html, body{ height:100%; }
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.5;
 }
+
+/* Aplicar a mesma fonte do header-title em toda a página */
+body, h1, h2, h3, h4, h5, h6, .header-title, .subtitle, .card, .btn, .filters, .group, .hd, .bd, .tabs, .tab, .tab-panel, .toolbar, table, th, td, label, input, select {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif !important;
+}
+
+/* Aplicar font-size .95rem a todos textos sem classe especial */
+body, p, span, div, td, th, label, input, select {
+  font-size: .95rem;
+}
+
+/* ---------- Header ---------- */
 .header {
   background: #003366;
   color: #fff;
@@ -9,43 +53,28 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 16px 32px;
+  box-shadow: 0 6px 16px rgba(2,6,23,.06);
 }
-.header-left {
-  display: flex;
-  align-items: center;
-}
-.logo {
-  height: 40px;
-  margin-right: 16px;
-}
-.header-title h1 {
-  font-size: 1.5rem;
-  margin: 0;
-}
-.subtitle {
-  font-size: 1rem;
-  color: #cce0ff;
-}
+.header-left { display: flex; align-items: center; }
+.logo { height: 40px; margin-right: 16px; }
+.header-title h1 { font-size: 1.5rem; margin: 0; }
+.subtitle { font-size: 1rem; color: #cce0ff; }
 .back-btn {
   background: transparent;
   border: 1px solid #cce0ff;
   color: #fff;
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: background 0.2s, color 0.2s;
+  transition: all .2s ease-in-out;
 }
-.back-btn:hover {
-  background: #cce0ff;
-  color: #003366;
-}
-.arrow {
-  margin-right: 8px;
-  font-size: 1.2em;
-}
+.back-btn:hover { background: #cce0ff; color: #003366; transform: translateY(-1px); box-shadow: var(--shadow); }
+.arrow { margin-right: 8px; font-size: 1.2em; }
+
+/* ---------- Containers / Grids ---------- */
 .grid-2 {
   max-width: 1200px;
   margin: 0 auto;
@@ -55,8 +84,426 @@ body {
   padding: 0 24px;
   margin-top: 20px;
 }
-.full-width-box {
+
+.full-width-box,
+.conteudo-box {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 240px;
+}
+
+@media (max-width:1100px){
+  .grid-2{ grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .full-width-box,
+  .conteudo-box {
+    padding: 0 16px;
+  }
+}
+
+/* Linha do tempo ocupa a mesma largura dos cards principais */
+.grid-2 > aside[aria-label="Linha do tempo do processo"] {
+  grid-column: 1 / 2;
+}
+.grid-2 > section[aria-label="Documentos do processo"],
+.grid-2 > section[aria-label="Instrumentos Contratuais"] {
+  grid-column: 1 / 2;
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.card .hd {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+  background: #f8fafc;
+  letter-spacing: .2px;
+  font-size: 1rem;
+}
+
+.card .bd {
+  padding: 20px 18px; /* +respiro */
+}
+
+.card .bd div {
+  margin: 6px 0;
+  color: #374151;
+  font-size: .95rem;
+}
+.card .bd div strong { color: var(--text); }
+
+/* ---------- Filtros / Form ---------- */
+.filters {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(150px,1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+@media (max-width:1100px){ .filters{ grid-template-columns: repeat(3, minmax(180px,1fr)); } }
+@media (max-width:700px){ .filters{ grid-template-columns: 1fr 1fr; } }
+
+.group { display: flex; flex-direction: column; gap: 6px; }
+.group label { font-size: .9rem; font-weight: 700; }
+.group input, .group select {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff;
+}
+
+/* ---------- Botões ---------- */
+.btn{
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+.btn:hover{ transform: translateY(-1px); box-shadow: 0 6px 18px rgba(2,6,23,.08); }
+.btn.primary{ background: var(--brand); color:#fff; border-color: transparent; }
+.btn.primary:hover{ filter: brightness(1.03); }
+
+.btn.ghost{ background: transparent; }
+
+.actions{ display: flex; gap: 8px; align-items: end; }
+
+/* ---------- Tabelas ---------- */
+.card table{ width: 100%; border-collapse: collapse; }
+.card th, .card td{ text-align: left; font-size: .95em; }
+
+thead th{
+  text-align: left;
+  font-size: .82rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 8px;
+  background: #fafafa;
+}
+tbody td{
+  border-bottom: 1px solid var(--border);
+  padding: 12px 8px;
+  vertical-align: top;
+}
+tbody tr:hover{ background:#f1f5f9; }
+.right{ text-align: right; }
+
+/* ---------- Chips / Badges ---------- */
+.chip{
+  font-size: .75rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+.chip.ok{ background:#ecfdf5; border-color:#bbf7d0; color:#065f46; font-weight:600; }
+.chip.warn{ background:#fffbeb; border-color:#fde68a; color:#92400e; font-weight:600; }
+.chip.danger{ background:#fef2f2; border-color:#fecaca; color:#7f1d1d; font-weight:600; }
+.chip.secret{ background:#eef2ff; border-color:#c7d2fe; color:#3730a3; }
+.chip.neutral{ background:#f8fafc; border-color:#e2e8f0; color:#334155; }
+
+/* ---------- Process header (3 cards acima) ---------- */
+.process-header{ 
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+@media (max-width:1100px){ .process-header{ grid-template-columns: 1fr; } }
+
+/* Layout 2 colunas nos dois cards da direita (desktop) */
+@media (min-width: 1024px){
+  .process-header .card:nth-child(2) .bd,
+  .process-header .card:nth-child(3) .bd{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+  }
+  .process-header .card:nth-child(2) .bd > div,
+  .process-header .card:nth-child(3) .bd > div{
+    margin: 6px 0;
+  }
+}
+
+/* ---------- Toolbar / Busca ---------- */
+.toolbar{ display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; margin-bottom:10px; }
+.search{ display:flex; gap:8px; }
+.search input{ min-width:280px; }
+
+/* ---------- Pager ---------- */
+.pager{ display:flex; gap:8px; justify-content:flex-end; margin-top:10px; }
+
+/* ---------- Cards específicos ---------- */
+
+/* Instrumentos Contratuais: largura adaptável e scroll horizontal seguro */
+.card[aria-label="Instrumentos Contratuais"]{ max-width: 100%; overflow-x: auto; }
+.card[aria-label="Instrumentos Contratuais"] table{ min-width: 900px; width: 100%; table-layout: auto; }
+.card[aria-label="Instrumentos Contratuais"] th,
+.card[aria-label="Instrumentos Contratuais"] td{ padding: 8px 10px; white-space: nowrap; }
+
+/* Documentos do processo: mantém consistência com as demais tabelas */
+.card[aria-label="Documentos do processo"] table{ width:100%; }
+
+/* ---------- Utilidades ---------- */
+.muted{ color: var(--muted); }
+
+/* ---------- Tema alternativo (opcional, caso use ?theme=portal) ---------- */
+:root.portal-theme{
+  --brand:#003ea8; --brand-600:#003081; --bg:#f4f7fb; --surface:#fff;
+  --border:#e3eaf3; --text:#0b1324; --muted:#64748b; --radius:20px;
+  --shadow:0 10px 34px rgba(2,6,23,.10);
+}
+/* 1) Equalizar a altura dos três cards do topo */
+.process-header{
+  grid-template-columns: repeat(3, 1fr);   /* já está assim, só garantindo */
+  align-items: stretch;                     /* faz os itens esticarem */
+  grid-auto-rows: 1fr;                      /* cada linha com a mesma fração */
+}
+.process-header > .card{
+  height: 100%;                             /* ocupa a linha toda */
+  display: flex;                            /* permite esticar o conteúdo */
+  flex-direction: column;
+}
+.process-header > .card .bd{
+  flex: 1 1 auto;                           /* o corpo preenche a altura */
+}
+
+/* 2) Garantir que os grids internos não “estourem” o alinhamento */
+@media (min-width: 1024px){
+  .process-header .card:nth-child(2) .bd,
+  .process-header .card:nth-child(3) .bd{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    align-content: start;                   /* não força crescimento vertical */
+  }
+}
+
+/* 3) Filtros: inputs e botões com a MESMA altura */
+.group input,
+.group select,
+.btn{
+  height: 42px;
+  line-height: 42px;        /* melhora o alinhamento da label do botão */
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Se quiser os botões um pouco mais compactos, reduza só neles: */
+/* .btn{ height: 40px; line-height: 40px; } */
+
+/* 4) Pequena correção para diferença de 1px do cabeçalho do card */
+.card .hd{ border-bottom: 1px solid var(--border); }
+
+/* === Topo em alturas iguais (troca grid por flex) === */
+.process-header{
+  display: flex;            /* em vez de grid */
+  gap: 20px;
+  align-items: stretch;     /* todos com a mesma altura */
+  margin-bottom: 20px;
+}
+
+.process-header > .card{
+  flex: 1 1 0;              /* cada card ocupa 1/3 e cresce/encolhe igual */
+  display: flex;            /* permite esticar o conteúdo interno */
+  flex-direction: column;
+  height: auto;
+}
+
+.process-header > .card .bd{
+  flex: 1 1 auto;           /* o corpo preenche a altura do card */
+}
+
+/* Mantém 2 colunas internas nos cards 2 e 3 sem “empurrar” altura extra */
+@media (min-width: 1024px){
+  .process-header .card:nth-child(2) .bd,
+  .process-header .card:nth-child(3) .bd{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    align-content: start;   /* não força crescimento vertical */
+  }
+}
+
+/* Responsivo: empilha os 3 cards no mobile */
+@media (max-width: 1100px){
+  .process-header{
+    flex-direction: column;
+  }
+}
+
+/* Uniformiza alturas dos controles nos filtros (opcional, mas ajuda muito) */
+.group input,
+.group select,
+.btn{
+  height: 42px;
+  line-height: 42px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+/* === Overrides para alinhar os três cards do topo === */
+.process-header{
+  display:flex;              /* usa flex no lugar de grid */
+  gap:20px;
+  align-items:stretch;
+  margin-bottom:20px;
+}
+
+.process-header > .card{
+  flex:1 1 0;                /* cada card ocupa espaço igual */
+  display:flex;
+  flex-direction:column;
+  height:auto;
+}
+
+.process-header > .card .bd{
+  flex:1 1 auto;             /* o corpo do card preenche a altura */
+}
+
+/* Responsivo: empilha no mobile */
+@media (max-width:1100px){
+  .process-header{ flex-direction: column; }
+}
+
+/* Mantém 2 colunas nos cards 2 e 3, mas sem empurrar altura */
+@media (min-width:1024px){
+  .process-header .card:nth-child(2) .bd,
+  .process-header .card:nth-child(3) .bd{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap:16px;
+    align-content:start;
+  }
+}
+
+/* Controles dos filtros nivelados */
+.group input,
+.group select,
+.btn{
+  height:42px;
+  line-height:42px;
+  padding-top:0;
+  padding-bottom:0;
+}
+
+/* Card Documentos do Processo ocupa largura máxima igual ao card Filtros rápidos */
+.grid-2 > section[aria-label="Documentos do processo"] {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  grid-column: 1 / -1;
+}
+
+/* Card Instrumentos Contratuais ocupa largura máxima igual ao card Filtros rápidos */
+.grid-2 > section[aria-label="Instrumentos Contratuais"] {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  grid-column: 1 / -1;
+}
+
+/* Card Linha do Tempo ocupa largura máxima igual ao card Filtros rápidos */
+.grid-2 > aside[aria-label="Linha do tempo do processo"] {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  grid-column: 1 / -1;
+}
+/* ===== styles_compacto.css =====
+   Camada complementar para reduzir scroll (abas, sticky filters, densidade)
+   Importar DEPOIS do seu styles.css
+*/
+
+/* Abas */
+.tabs.card{ margin-top: 16px; }
+.tabs .tabs-nav{
+  display:flex; gap:10px; align-items:center; padding:10px 16px; border-bottom:1px solid var(--border);
+}
+.tab{ border:1px solid var(--border); background:#fff; padding:8px 12px; border-radius:10px; cursor:pointer; }
+.tab.is-active{ background:var(--brand); color:#fff; border-color:transparent; }
+.tabs-fill{ flex:1; }
+.density label{ font-size:.9rem; color:var(--muted); user-select:none; }
+
+.tab-panels{ padding:16px; }
+.tab-panel{ display:none; }
+.tab-panel.is-active{ display:block; }
+
+/* Painéis com rolagem interna para reduzir scroll da página */
+.panel-scroll{
+  max-height: 62vh;
+  overflow:auto;
+  padding-right:8px;
+}
+
+/* Filtros rápidos grudadinhos abaixo do cabeçalho */
+.card.sticky-filters{ position: sticky; top: 88px; z-index: 30; }
+@media (max-width: 1100px){ .card.sticky-filters{ top: 72px; } }
+
+/* Densidade compacta (toggle) */
+body.compact .card .bd{ padding:14px 14px; }
+body.compact table thead th{ padding:8px 6px; }
+body.compact table tbody td{ padding:8px 6px; }
+body.compact .group input, body.compact .group select, body.compact .btn{ height:36px; line-height:36px; }
+
+/* KPIs simples */
+.kpis{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+
+/* Toolbar controles adicionais */
+.table-ctl{ display:flex; gap:8px; align-items:center; }
+
+/* Botão flutuante topo */
+.fab-top{ position:fixed; right:18px; bottom:18px; z-index:50; }
+
+/* Reduzir largura máxima dos cards Filtros rápidos e Conteúdo em 3,40% e manter centralização */
+.card.sticky-filters,
+.tabs.card {
+  max-width: 1159.2px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  box-sizing: border-box;
+}
+@media (max-width: 700px) {
+  .card.sticky-filters,
+  .tabs.card {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+/* Chips sem efeitos visuais: apenas texto simples */
+.chip,
+.chip.ok,
+.chip.warn,
+.chip.danger,
+.chip.secret,
+.chip.neutral {
+  background: none !important;
+  border: none !important;
+  color: inherit !important;
+  font-weight: normal !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+/* Garantir que todo texto em negrito (bold) use font-size 1rem */
+strong, b, .bold, .hd {
+  font-size: 1rem !important;
+}
+
+/* Garantir que span dentro de strong herde font-size 1rem */
+strong span {
+  font-size: 1rem !important;
 }

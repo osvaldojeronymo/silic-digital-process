@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SILIC 2.0 — Modo compacto</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles_compacto.css">
 </head>
 <body>
   <header class="header">
@@ -14,266 +16,171 @@
         <span class="subtitle">Protótipo - Processos Digitais</span>
       </div>
     </div>
-    <button class="back-btn" onclick="voltarAoPortal()">
+    <button class="back-btn" onclick="history.back()">
       <span class="arrow">&#8592;</span> Voltar ao Portal
     </button>
   </header>
-  <script src="script.js"></script>
-
-</body>
-</html>
-  <style>
-    :root{
-      --brand:#0a67c0; --brand-600:#0d5aaa; --text:#0f172a; --muted:#475569;
-      --bg:#f7fafc; --surface:#fff; --border:#e2e8f0; --shadow:0 8px 28px rgba(2,6,23,.08);
-      --ok:#16a34a; --warn:#f59e0b; --danger:#dc2626; --radius:16px;
-      --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px;
-    }
-    :root.portal-theme{ --brand:#003ea8; --brand-600:#003081; --bg:#f4f7fb; --surface:#fff; --border:#e3eaf3; --text:#0b1324; --muted:#64748b; --radius:20px; --shadow:0 10px 34px rgba(2,6,23,.10); }
-    *,*::before,*::after{box-sizing:border-box}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--text);background:var(--bg)}
-    .portal-shell{background:linear-gradient(90deg,var(--brand),#4ea5ff); color:#fff}
-    .portal-shell .inner{max-width:1200px;margin:0 auto;display:flex;gap:16px;align-items:center;justify-content:space-between;padding:10px 24px}
-    .portal-shell .logo{display:flex;align-items:center;gap:10px}
-    .portal-shell .logo .mark{width:28px;height:28px;border-radius:8px;background:#fff;opacity:.9}
-    .portal-shell a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:6px 10px;border-radius:999px}
-    .appbar{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 18px;z-index:50}
-    .brand{display:flex;align-items:center;gap:10px}
-    .brand .logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--brand),#4ea5ff)}
-    .brand h1{margin:0;font-size:1.05rem;font-weight:800}
-    .brand small{color:var(--muted)}
-    .shell{max-width:1200px;margin:0 auto;padding:24px}
-    .process-header{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .card .hd{padding:14px 16px;border-bottom:1px solid var(--border);font-weight:700}
-    .card .bd{padding:14px 16px}
-    .filters{display:grid;grid-template-columns:repeat(6,minmax(150px,1fr));gap:12px;margin-top:8px}
-    @media (max-width:1100px){.filters{grid-template-columns:repeat(3,minmax(180px,1fr))}}
-    @media (max-width:700px){.filters{grid-template-columns:1fr 1fr}}
-    .group{display:flex;flex-direction:column;gap:6px}
-    .group label{font-size:.9rem;font-weight:700}
-    .group input,.group select{border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fff}
-    .actions{display:flex;gap:8px;align-items:end}
-    .btn{padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;cursor:pointer}
-    .btn.primary{background:var(--brand);color:#fff;border-color:transparent}
-    .btn.ghost{background:transparent}
-    .grid-2{display:grid;grid-template-columns:1fr 360px;gap:24px;margin-top:20px}
-    @media (max-width:1100px){.grid-2{grid-template-columns:1fr}}
-    table{width:100%;border-collapse:collapse}
-    thead th{text-align:left;font-size:.82rem;color:var(--muted);border-bottom:1px solid var(--border);padding:10px 8px}
-    tbody td{border-bottom:1px solid var(--border);padding:12px 8px;vertical-align:top}
-    tbody tr:hover{background:#f8fafc}
-    .right{text-align:right}
-    .chip{font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#fff}
-    .chip.ok{background:#ecfdf5;border-color:#bbf7d0;color:#065f46}
-    .chip.warn{background:#fffbeb;border-color:#fde68a;color:#92400e}
-    .chip.danger{background:#fef2f2;border-color:#fecaca;color:#7f1d1d}
-    .chip.secret{background:#eef2ff;border-color:#c7d2fe;color:#3730a3}
-    .toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-bottom:10px}
-    .search{display:flex;gap:8px}
-    .search input{min-width:280px}
-    .timeline{display:grid;gap:12px}
-    .event{display:grid;grid-template-columns:22px 1fr;gap:10px}
-    .dot{width:10px;height:10px;margin-top:6px;border-radius:999px;background:var(--brand);box-shadow:0 0 0 3px rgba(13,106,170,.15)}
-    .event .card{border-radius:12px;border:1px solid var(--border);padding:10px 12px;background:#fff}
-    .muted{color:var(--muted)}
-    .pager{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
-  </style>
-</head>
-<body>
 
   <main class="shell">
+    <!-- Cabeçalho do processo (3 cards) -->
     <section class="process-header">
-  <div class="card"><div class="hd">Identificação</div><div class="bd">
-  <div><strong>Protocolo:</strong> <span id="nProtocolo">64202</span></div>
-  <div><strong>Data do Protocolo:</strong> <span id="dataProtocolo">04/02/2025</span></div>
-  <div><strong>Nº Processo:</strong> <span id="nProcesso">2103/2024</span></div>
-  <div><strong>Descrição do Objeto:</strong> <span id="descricaoObjeto">Contratação de serviços de tecnologia da informação para suporte ao SILIC 2.0</span></div>
-  <div><strong>Valor total:</strong> <span id="valorIdentificacao">R$ 2.460.000,00</span></div>
-  </div></div>
-  <div class="card"><div class="hd">Detalhes do Protocolo</div><div class="bd">
-  <div><strong>Vigência:</strong> <span id="vigencia">04/02/2025 — 03/02/2030</span></div>
-  <div><strong>Situação do Protocolo:</strong> <span id="situacao">Contratada</span></div>
-  <div><strong>Modalidade:</strong> <span id="modalidade">Dispensa de Licitação</span></div>
-  <div><strong>Modalidade subgrupo:</strong> <span id="modalidadeSubgrupo">Serviços de TI</span></div>
-  <div><strong>Gestor Demandante:</strong> <span id="gestor">7074 - CELOG</span></div>
-  <div><strong>Equipe Remota:</strong> <span id="equipeRemota">Equipe de Apoio SILIC</span></div>
-  </div></div>
-  <div class="card"><div class="hd">Classificação/Responsáveis</div><div class="bd">
-  <div><strong>Classificação:</strong> <span class="chip secret">Público</span></div>
-  <div><strong>Usuário Demandante:</strong> <span id="usuarioDemandante">C088937 — MARCIA M. F. SILVA</span></div>
-  <div><strong>Usuário Responsável:</strong> <span id="usuarioResponsavel">C049088 — WILLIAN F. DA SILVA</span></div>
-      </div></div>
+      <div class="card">
+        <div class="hd">Identificação</div>
+        <div class="bd">
+          <div><strong>Protocolo:</strong> <span id="nProtocolo">64202</span></div>
+          <div><strong>Data do Protocolo:</strong> <span id="dataProtocolo">04/02/2025</span></div>
+          <div><strong>Nº Processo:</strong> <span id="nProcesso">2103/2024</span></div>
+          <div><strong>Número da Licitação:</strong> <span id="nLicitacao">1234/2025</span></div>
+          <div><strong>Descrição do Objeto:</strong> <span id="descricaoObjeto">Contratação de serviços de tecnologia da informação para suporte ao SILIC 2.0</span></div>
+          <div><strong>Valor total:</strong> <span id="valorIdentificacao">R$ 2.460.000,00</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="hd">Detalhes do Protocolo</div>
+        <div class="bd">
+          <div><strong>Vigência:</strong> <span id="vigencia">04/02/2025 — 03/02/2030</span></div>
+          <div><strong>Situação do Protocolo:</strong> <span id="situacao">Contratada</span></div>
+          <div><strong>Modalidade:</strong> <span id="modalidade">Dispensa de Licitação</span></div>
+          <div><strong>Modalidade subgrupo:</strong> <span id="modalidadeSubgrupo">Serviços de TI</span></div>
+          <div><strong>Gestor Demandante:</strong> <span id="gestor">7074 - CELOG</span></div>
+          <div><strong>Equipe Remota:</strong> <span id="equipeRemota">Equipe de Apoio SILIC</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="hd">Classificação/Responsáveis</div>
+        <div class="bd">
+          <div><strong>Classificação:</strong> <span class="chip secret">Público</span></div>
+          <div><strong>Usuário Demandante:</strong> <span id="usuarioDemandante">C088937 — MARCIA M. F. SILVA</span></div>
+          <div><strong>Usuário Responsável:</strong> <span id="usuarioResponsavel">C049088 — WILLIAN F. DA SILVA</span></div>
+          <div><strong>Fornecedor:</strong> <span id="fornecedor">00.000.000/0001-91 — FORNECEDOR EXEMPLO LTDA</span></div>
+        </div>
+      </div>
     </section>
 
-    <div class="full-width-box">
-      <section class="card"><div class="hd">Filtros rápidos</div><div class="bd"><div class="filters">
-      <div class="group"><label>Período</label><select id="fPeriodo"><option value="all">Todos</option><option>Últimos 30 dias</option><option>Últimos 90 dias</option></select></div>
-      <div class="group"><label>Usuário</label><input id="fUsuario" placeholder="Matrícula/nome"/></div>
-      <div class="group"><label>Tipo de Documento</label><select id="fTipo"><option value="all">Todos</option></select></div>
-      <div class="group"><label>Status</label><select id="fStatus"><option value="all">Todos</option><option>Assinado</option><option>Publicado</option><option>Cancelado</option><option>Arquivado</option><option>Substituído</option></select></div>
-      <div class="group"><label>Sigiloso</label><select id="fSigilo"><option value="all">Todos</option><option>Público</option><option>Interno</option><option>Confidencial</option></select></div>
-      <div class="actions"><button class="btn" id="btnLimpar">Limpar</button><button class="btn primary" id="btnAplicar">Aplicar</button></div>
-    </div></div></section>
-  </div>
-
-    <div class="grid-2">
-      <section class="card" aria-label="Documentos do processo">
-        <div class="hd">Documentos do Processo</div>
-        <div class="bd">
-          <div class="toolbar">
-            <div class="search">
-              <input id="q" placeholder="Pesquisar por nome, descrição, usuário ou protocolo" />
-              <button class="btn" id="btnAdd">Adicionar (mock)</button>
-            </div>
-            <div>
-              <button class="btn" id="btnExport">Exportar JSON</button>
-              <button class="btn ghost" id="btnPDF">Gerar PDF (mock)</button>
-            </div>
-          </div>
-          <table>
-            <thead><tr><th>Data/Hora</th><th>Tipo</th><th>Descrição</th><th>Usuário</th><th>Protocolo</th><th>Status</th><th>Sigilo</th><th class="right">Ações</th></tr></thead>
-            <tbody id="rows"></tbody>
-          </table>
-          <div class="pager"><button class="btn" id="prev">Anterior</button><span class="muted" id="pageInfo">Página 1</span><button class="btn" id="next">Próxima</button></div>
+    <!-- Filtros rápidos fixos abaixo da appbar -->
+    <section class="card sticky-filters">
+      <div class="hd">Filtros rápidos</div>
+      <div class="bd">
+        <div class="filters">
+          <div class="group"><label>Período</label><select id="fPeriodo"><option value="all">Todos</option><option>Últimos 30 dias</option><option>Últimos 90 dias</option></select></div>
+          <div class="group"><label>Usuário</label><input id="fUsuario" placeholder="Matrícula/nome"/></div>
+          <div class="group"><label>Tipo de Documento</label><select id="fTipo"><option value="all">Todos</option></select></div>
+          <div class="group"><label>Status</label><select id="fStatus"><option value="all">Todos</option><option>Assinado</option><option>Publicado</option><option>Cancelado</option><option>Arquivado</option><option>Substituído</option></select></div>
+          <div class="group"><label>Sigiloso</label><select id="fSigilo"><option value="all">Todos</option><option>Público</option><option>Interno</option><option>Confidencial</option></select></div>
+          <div class="actions"><button class="btn" id="btnLimpar">Limpar</button><button class="btn primary" id="btnAplicar">Aplicar</button></div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <aside class="card" aria-label="Linha do tempo do processo"><div class="hd">Linha do tempo</div><div class="bd"><div class="timeline" id="timeline"></div></div></aside>
-    </div>
+    <!-- Abas com painéis roláveis -->
+    <section class="tabs card">
+      <div class="hd">Conteúdo</div>
+      <div class="tabs-nav" role="tablist">
+        <button class="tab is-active" data-tab="docs" role="tab" aria-selected="true">Documentos</button>
+        <button class="tab" data-tab="inst" role="tab">Instrumentos</button>
+        <button class="tab" data-tab="time" role="tab">Linha do tempo</button>
+        <div class="tabs-fill"></div>
+        <div class="density">
+          <label><input type="checkbox" id="toggleDensity"> Compactar</label>
+        </div>
+      </div>
+      <div class="tab-panels">
+
+        <!-- DOCUMENTOS -->
+        <section id="tab-docs" class="tab-panel is-active">
+          <div class="panel-scroll">
+            <div class="toolbar">
+              <div class="search">
+                <input id="q" placeholder="Pesquisar por nome, descrição, usuário ou protocolo" />
+                <button class="btn" id="btnAdd">Adicionar (mock)</button>
+              </div>
+              <div class="table-ctl">
+                <label class="muted">Linhas:
+                  <select id="pageSize"><option>10</option><option>20</option><option>50</option></select>
+                </label>
+                <button class="btn" id="btnExport">Exportar JSON</button>
+                <button class="btn ghost" id="btnPDF">Gerar PDF (mock)</button>
+              </div>
+            </div>
+            <table>
+              <thead><tr><th>Data/Hora</th><th>Tipo</th><th>Descrição</th><th>Usuário</th><th>Protocolo</th><th>Status</th><th>Sigilo</th><th class="right">Ações</th></tr></thead>
+              <tbody id="rows"></tbody>
+            </table>
+            <div class="pager"><button class="btn" id="prev">Anterior</button><span class="muted" id="pageInfo">Página 1</span><button class="btn" id="next">Próxima</button></div>
+          </div>
+        </section>
+
+        <!-- INSTRUMENTOS -->
+        <section id="tab-inst" class="tab-panel">
+          <div class="panel-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>N Instr. Contratual</th>
+                  <th>Fornecedor</th>
+                  <th>Tipo</th>
+                  <th>Filial</th>
+                  <th>Resp. Formal</th>
+                  <th>Gestor Operacional</th>
+                  <th>Vigência</th>
+                  <th>Situação</th>
+                  <th>Descrição Objeto</th>
+                  <th>Valor Global</th>
+                </tr>
+              </thead>
+              <tbody id="contratos"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- TIMELINE -->
+        <section id="tab-time" class="tab-panel">
+          <div class="panel-scroll">
+            <div class="timeline" id="timeline"></div>
+          </div>
+        </section>
+      </div>
+    </section>
   </main>
 
-  <script type="module">
-    const qs = new URLSearchParams(location.search); if(qs.get('theme')==='portal') document.documentElement.classList.add('portal-theme');
-    const tipos = ['SOLICITAÇÃO DE DOCUMENTAÇÃO','DOCUMENTOS RECEBIDOS','OBSERVAÇÕES','DOCUMENTOS COMPLEMENTARES','MINUTA','ETP','TR','ATA','PARECER'];
-    const sigilos = ['Público','Interno','Confidencial'];
-    const finalStatuses = ['Assinado','Publicado','Cancelado','Arquivado','Substituído'];
-    const rand = a => a[Math.floor(Math.random()*a.length)];
-    const pad = n => String(n).padStart(2,'0');
-    const dateAgo = days => { const d=new Date(); d.setDate(d.getDate()-days); return d };
+  <button class="btn fab-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Topo</button>
 
-    const documentos = Array.from({length:42}).map((_,i)=>{
-      const d = dateAgo( Math.floor(Math.random()*180) );
-      const status = rand(finalStatuses);
-      return { id: crypto.randomUUID(), data: d.toISOString(), tipo: rand(tipos), descricao: i%6===0? 'Solicitação de complementação' : i%5===0? 'Minuta de contrato v'+((i%3)+1) : 'Documento '+(i+1), usuario: i%4===0? 'C049088 — WILLIAN F. DA SILVA' : 'C088937 — MARCIA M. F. SILVA', protocolo: (60000 + i).toString(), status, sigilo: rand(sigilos) };
-    });
+  <!-- Seu JS atual que popula tabelas/timeline -->
+  <script src="script.js"></script>
 
-    const eventos = [
-      { t:'ProcessoCriado', quem:'C088937', quando: dateAgo(180).toISOString(), msg:'Processo 2103/2024 criado' },
-      { t:'DocumentoAnexado', quem:'C049088', quando: dateAgo(175).toISOString(), msg:'ETP anexado' },
-      { t:'AssinaturaConcluida', quem:'C049088', quando: dateAgo(170).toISOString(), msg:'TR assinado' },
-      { t:'PublicacaoConcluida', quem:'C088937', quando: dateAgo(30).toISOString(), msg:'Extrato publicado no D.O.U.' },
-    ];
+  <!-- Habilita as abas, densidade e page size -->
+  <script>
+  // Tabs
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.tab'); if(!btn) return;
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('is-active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    document.querySelector('#tab-' + btn.dataset.tab).classList.add('is-active');
+  });
 
-    let state = { page:1, pageSize:10, q:'', filters:{ periodo:'all', usuario:'', tipo:'all', status:'all', sigilo:'all' } };
-    const $ = s=>document.querySelector(s);
-    const formatDT = iso=>{ const d=new Date(iso); return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}` };
+  // Densidade
+  document.getElementById('toggleDensity')?.addEventListener('change', e=>{
+    document.body.classList.toggle('compact', e.target.checked);
+  });
 
-    function applyFilters(list){
-      const {periodo,usuario,tipo,status,sigilo} = state.filters;
-      let out = list.filter(d=>
-        (!state.q || (d.descricao+d.usuario+d.protocolo+d.tipo).toLowerCase().includes(state.q.toLowerCase())) &&
-        (usuario? d.usuario.toLowerCase().includes(usuario.toLowerCase()) : true) &&
-        (tipo==='all' || d.tipo===tipo) &&
-        (status==='all' || d.status===status) &&
-        (sigilo==='all' || d.sigilo===sigilo)
-      );
-      if(periodo!=='all'){
-        const days = periodo.includes('30')?30:90; const min = Date.now()-days*24*3600*1000;
-        out = out.filter(d=> new Date(d.data).getTime()>=min );
-      }
-      return out.sort((a,b)=> new Date(b.data)-new Date(a.data));
-    }
-
-    function renderTable(){
-      const list = applyFilters(documentos);
-      const totalPages = Math.max(1, Math.ceil(list.length/state.pageSize));
-      state.page = Math.min(state.page, totalPages);
-      const start = (state.page-1)*state.pageSize;
-      const pageItems = list.slice(start, start+state.pageSize);
-
-      $('#rows').innerHTML = pageItems.map(d=>`
-        <tr>
-          <td>${formatDT(d.data)}</td>
-          <td>${d.tipo}</td>
-          <td>${d.descricao}</td>
-          <td>${d.usuario}</td>
-          <td>${d.protocolo}</td>
-          <td><span class="chip ${d.status==='Assinado'||d.status==='Publicado'?'ok':d.status==='Cancelado'?'danger':d.status==='Substituído'?'warn':''}">${d.status}</span></td>
-          <td>${d.sigilo}</td>
-          <td class="right">
-            <button class="btn ghost" data-act="preview" data-id="${d.id}">Pré-visualizar</button>
-            <button class="btn" data-act="version" data-id="${d.id}">Versionar</button>
-          </td>
-        </tr>
-      `).join('');
-
-      $('#pageInfo').textContent = `Página ${state.page} de ${totalPages}`;
-      $('#prev').disabled = state.page<=1; $('#next').disabled = state.page>=totalPages;
-    }
-
-    function renderTimeline(){
-      $('#timeline').innerHTML = eventos
-        .sort((a,b)=> new Date(b.quando)-new Date(a.quando))
-        .map(e=>`
-          <div class="event">
-            <div class="dot"></div>
-            <div class="card">
-              <strong>${e.t}</strong> — ${e.msg}
-              <div class="muted">${formatDT(e.quando)} • ${e.quem}</div>
-            </div>
-          </div>
-        `).join('');
-    }
-
-    function bindControls(){
-      const selTipo = $('#fTipo');
-      tipos.forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; selTipo.appendChild(o); });
-
-      $('#btnAplicar').onclick = ()=>{ state.page=1; renderTable(); };
-      $('#btnLimpar').onclick = ()=>{
-        state = { page:1, pageSize:10, q:'', filters:{ periodo:'all', usuario:'', tipo:'all', status:'all', sigilo:'all' } };
-        $('#q').value=''; $('#fPeriodo').value='all'; $('#fUsuario').value=''; $('#fTipo').value='all'; $('#fStatus').value='all'; $('#fSigilo').value='all';
-        renderTable();
-      };
-
-      $('#q').addEventListener('input', e=>{ state.q = e.target.value; state.page=1; renderTable(); });
-      $('#fPeriodo').onchange = e=> state.filters.periodo = e.target.value;
-      $('#fUsuario').oninput = e=> state.filters.usuario = e.target.value;
-      $('#fTipo').onchange = e=> state.filters.tipo = e.target.value;
-      $('#fStatus').onchange = e=> state.filters.status = e.target.value;
-      $('#fSigilo').onchange = e=> state.filters.sigilo = e.target.value;
-
-      $('#prev').onclick = ()=>{ state.page--; renderTable(); };
-      $('#next').onclick = ()=>{ state.page++; renderTable(); };
-
-      document.addEventListener('click', (e)=>{
-        const btn = e.target.closest('button'); if(!btn) return;
-        const id = btn.dataset.id; const act = btn.dataset.act;
-        if(!id || !act) return;
-        const doc = documentos.find(d=>d.id===id);
-        if(act==='preview') alert(`Pré-visualizando: ${doc.descricao}`);
-        if(act==='version'){ doc.descricao += ' (nova versão)'; doc.status='Substituído'; renderTable(); }
+  // Page size (integra ao state usado pelo script.js existente)
+  window.addEventListener('DOMContentLoaded', ()=>{
+    const ps = document.getElementById('pageSize');
+    if(ps){
+      ps.addEventListener('change', e=>{
+        try{
+          window.state = window.state || {};
+          window.state.pageSize = parseInt(e.target.value,10) || 10;
+          window.state.page = 1;
+          if(typeof window.renderTable === 'function') window.renderTable();
+        }catch(err){ console.warn('pageSize handler', err); }
       });
-
-      $('#btnAdd').onclick = ()=>{
-        documentos.unshift({ id: crypto.randomUUID(), data: new Date().toISOString(), tipo:'DOCUMENTOS COMPLEMENTARES', descricao:'Upload de documento (mock)', usuario:'C012345 — Usuário Exemplo', protocolo: (65000+Math.floor(Math.random()*999)).toString(), status:'Publicado', sigilo:'Público' });
-        eventos.unshift({ t:'DocumentoAnexado', quem:'C012345', quando:new Date().toISOString(), msg:'Documento complementar anexado' });
-        renderTimeline(); renderTable();
-      };
-
-      $('#btnExport').onclick = ()=>{
-        const dump = { processo:{ numero: '2103/2024', protocolo:'64202' }, documentos, eventos };
-        const blob = new Blob([JSON.stringify(dump,null,2)], {type:'application/json'});
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'processo-digital.json'; a.click();
-      };
-
-      $('#btnPDF').onclick = ()=> alert('Geração de PDF simulada. Na versão Angular conectaremos a um serviço de export.');
     }
-
-    bindControls();
-    renderTable();
-    renderTimeline();
+  });
   </script>
 </body>
 </html>
+
