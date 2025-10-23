@@ -20,8 +20,6 @@ export function FiltrosRapidos(): HTMLElement {
           <select id="acao-select">
             <option value="todos">Todos</option>
             <option value="inclusao">Inclusão</option>
-            <option value="alteracao">Alteração</option>
-            <option value="alteracao-status">Alteração de status</option>
             <option value="exclusao">Exclusão</option>
           </select>
         </div>
@@ -37,13 +35,6 @@ export function FiltrosRapidos(): HTMLElement {
             <option value="interno-confidencial">Interno.Confidencial</option>
             <option value="externo-restrito">Externo.Restrito</option>
           </select>
-        </div>
-      </div>
-      
-      <div class="filtros-row">
-        <div class="campo-grupo campo-largo">
-          <label>Descrição do Objeto</label>
-          <input type="text" id="descricao-objeto" placeholder="Buscar por palavras do objeto">
         </div>
       </div>
       

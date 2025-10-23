@@ -73,17 +73,6 @@ export function FormularioPesquisa(): HTMLElement {
             >
           </div>
           
-          <div class="form-group">
-            <label for="numeroProcessoDigital">Número do Processo Digital</label>
-            <input 
-              type="text" 
-              id="numeroProcessoDigital" 
-              name="numeroProcessoDigital" 
-              placeholder="Ex: PD-2024-001234"
-              class="form-input"
-            >
-          </div>
-          
           <div class="form-actions">
             <button type="button" class="btn btn-ghost" id="limpar-form">
               Limpar

@@ -2,12 +2,36 @@ export function Informacoes(): HTMLElement {
   const section = document.createElement("section");
   section.className = "informacoes";
   
+  // Simular quantidades (em um cenário real, viriam da API)
+  const quantidades = {
+    documentos: 1247,
+    instrumentos: 15,
+    fornecedores: 3
+  };
+  
   section.innerHTML = `
     <h3>Informações</h3>
+    
+    <!-- Seção de KPIs/Quantidades -->
+    <div class="info-kpis">
+      <div class="kpi-card">
+        <div class="kpi-number">${quantidades.documentos.toLocaleString()}</div>
+        <div class="kpi-label">Documentos</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-number">${quantidades.instrumentos}</div>
+        <div class="kpi-label">Instrumentos</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-number">${quantidades.fornecedores}</div>
+        <div class="kpi-label">Fornecedores</div>
+      </div>
+    </div>
+    
     <div class="informacoes-container">
       <div class="tabs-header">
-        <button class="tab active" data-tab="documentos">Documentos</button>
-        <button class="tab" data-tab="instrumentos">Instrumentos</button>
+        <button class="tab active" data-tab="documentos">Documentos (${quantidades.documentos.toLocaleString()})</button>
+        <button class="tab" data-tab="instrumentos">Instrumentos (${quantidades.instrumentos})</button>
       </div>
       
       <div class="tabs-content">
@@ -23,8 +47,6 @@ export function Informacoes(): HTMLElement {
                 <option value="50">50</option>
                 <option value="100">100</option>
               </select>
-              <button class="btn btn-secondary">Exportar JSON</button>
-              <button class="btn btn-secondary">Gerar PDF (mock)</button>
             </div>
           </div>
           
@@ -39,7 +61,6 @@ export function Informacoes(): HTMLElement {
                   <th>Protocolo</th>
                   <th>Rótulo</th>
                   <th>Ações</th>
-                  <th>Detalhar</th>
                 </tr>
               </thead>
               <tbody id="documentos-tbody">
@@ -68,8 +89,6 @@ export function Informacoes(): HTMLElement {
                 <option value="50">50</option>
                 <option value="100">100</option>
               </select>
-              <button class="btn btn-secondary">Exportar JSON</button>
-              <button class="btn btn-secondary">Gerar PDF (mock)</button>
             </div>
           </div>
           
@@ -80,10 +99,6 @@ export function Informacoes(): HTMLElement {
                   <th>Nº Instr. Contratual</th>
                   <th>Fornecedor</th>
                   <th>Tipo</th>
-                  <th>Vigência</th>
-                  <th>Situação</th>
-                  <th>Descrição do Objeto</th>
-                  <th>Valor Original</th>
                 </tr>
               </thead>
               <tbody id="instrumentos-tbody">
@@ -148,7 +163,7 @@ export function Informacoes(): HTMLElement {
         tipo: 'Contrato',
         descricao: 'Contrato de Prestação de Serviços',
         modulo: 'Gestão Formal',
-        protocolo: '64201',
+        protocolo: '64215',
         rotulo: 'Interno.Confidencial'
       },
       {
@@ -156,7 +171,7 @@ export function Informacoes(): HTMLElement {
         tipo: 'Edital',
         descricao: 'Edital de Licitação - Processo 2103/2024',
         modulo: 'Contratação',
-        protocolo: '64200',
+        protocolo: '64202',
         rotulo: 'Público'
       },
       {
@@ -164,7 +179,7 @@ export function Informacoes(): HTMLElement {
         tipo: 'Ata',
         descricao: 'Ata de Reunião - Definições Técnicas',
         modulo: 'Gestão Formal',
-        protocolo: '64199',
+        protocolo: '64220',
         rotulo: 'Interno.Todos'
       },
       {
@@ -172,7 +187,7 @@ export function Informacoes(): HTMLElement {
         tipo: 'Relatório',
         descricao: 'Relatório de Análise Financeira',
         modulo: 'Contratação',
-        protocolo: '64198',
+        protocolo: '64202',
         rotulo: 'Interno.Caixa'
       },
       {
@@ -180,16 +195,13 @@ export function Informacoes(): HTMLElement {
         tipo: 'Parecer',
         descricao: 'Parecer Jurídico - Cláusulas Contratuais',
         modulo: 'Gestão Formal',
-        protocolo: '64197',
+        protocolo: '64225',
         rotulo: 'Externo.Confidencial'
       }
     ];
     
     tbody.innerHTML = dadosMock.map(item => {
-      const downloadEnabled = item.rotulo === 'Público';
-      const downloadButton = downloadEnabled 
-        ? `<button class="btn btn-sm btn-link">Download</button>`
-        : `<button class="btn btn-sm btn-link" disabled>Download</button>`;
+      const downloadButton = `<button class="btn btn-sm btn-link">Download</button>`;
       
       return `
         <tr>
@@ -200,9 +212,6 @@ export function Informacoes(): HTMLElement {
           <td>${item.protocolo}</td>
           <td>${item.rotulo}</td>
           <td>${downloadButton}</td>
-          <td>
-            <button class="btn btn-sm btn-link detalhar-btn">+</button>
-          </td>
         </tr>
       `;
     }).join('');
@@ -262,13 +271,9 @@ export function Informacoes(): HTMLElement {
     
     tbody.innerHTML = dadosMock.map(item => `
       <tr>
-        <td>${item.numero}</td>
+        <td><a href="#" class="btn-link" onclick="event.preventDefault(); alert('Ficha do Instrumento contratual');">${item.numero}</a></td>
         <td>${item.fornecedor}</td>
         <td>${item.tipo}</td>
-        <td>${item.vigencia}</td>
-        <td>${item.situacao}</td>
-        <td>${item.descricaoObjeto}</td>
-        <td>${item.valorOriginal}</td>
       </tr>
     `).join('');
   }

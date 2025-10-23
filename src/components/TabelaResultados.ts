@@ -3,6 +3,7 @@ const processosMock = [
   {
     id: "1",
     protocolo: "64202",
+    dataProtocolo: "04/02/2025",
     numeroProcesso: "2103/2024",
     numeroLicitacao: "1234/2025",
     numeroContrato: "00746/2025",
@@ -11,11 +12,13 @@ const processosMock = [
     objeto: "Contratação de serviços de tecnologia da informação para suporte ao SILIC 2.0",
     numeroProcessoDigital: "PD-2024-001234",
     situacao: "Contratada",
+    modalidade: "Dispensa de Licitação",
     valor: "R$ 2.460.000,00"
   },
   {
     id: "2",
     protocolo: "64203",
+    dataProtocolo: "15/01/2025",
     numeroProcesso: "2104/2024",
     numeroLicitacao: "1235/2025",
     numeroContrato: "00747/2025",
@@ -24,11 +27,13 @@ const processosMock = [
     objeto: "Manutenção e suporte de sistemas de gestão",
     numeroProcessoDigital: "PD-2024-001235",
     situacao: "Em andamento",
+    modalidade: "Concorrência",
     valor: "R$ 850.000,00"
   },
   {
     id: "3",
     protocolo: "64204",
+    dataProtocolo: "22/12/2024",
     numeroProcesso: "2105/2024", 
     numeroLicitacao: "1236/2025",
     numeroContrato: "00748/2025",
@@ -37,11 +42,13 @@ const processosMock = [
     objeto: "Desenvolvimento de aplicativo mobile",
     numeroProcessoDigital: "PD-2024-001236",
     situacao: "Licitação",
+    modalidade: "Tomada de Preços",
     valor: "R$ 1.200.000,00"
   },
   {
     id: "4",
     protocolo: "64205",
+    dataProtocolo: "10/11/2024",
     numeroProcesso: "2106/2024",
     numeroLicitacao: "1237/2025", 
     numeroContrato: "00749/2025",
@@ -50,6 +57,7 @@ const processosMock = [
     objeto: "Consultoria em transformação digital",
     numeroProcessoDigital: "PD-2024-001237",
     situacao: "Finalizada",
+    modalidade: "Pregão Eletrônico",
     valor: "R$ 750.000,00"
   }
 ];
@@ -64,19 +72,19 @@ export function TabelaResultados(searchParams: any): HTMLElement {
   container.innerHTML = `
     <div class="results-header">
       <h2>Resultados da Pesquisa</h2>
-      <p>Encontrados <strong>${resultados.length}</strong> processo(s)</p>
+      <p>Encontrado(s) <strong>${resultados.length}</strong> processo(s)</p>
     </div>
     
     <div class="results-table-container">
       <table class="results-table">
         <thead>
           <tr>
-            <th>Protocolo</th>
-            <th>Nº Processo</th>
-            <th>Fornecedor</th>
+            <th>Protocolo de Contratação</th>
+            <th>Nº do Processo</th>
+            <th>Data do Protocolo de Contratação</th>
             <th>Objeto</th>
-            <th>Situação</th>
-            <th>Valor</th>
+            <th>Situação do Protocolo</th>
+            <th>Modalidade</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -85,12 +93,7 @@ export function TabelaResultados(searchParams: any): HTMLElement {
             <tr>
               <td><strong>${processo.protocolo}</strong></td>
               <td>${processo.numeroProcesso}</td>
-              <td>
-                <div class="fornecedor-info">
-                  <div class="fornecedor-nome">${processo.fornecedor}</div>
-                  <div class="fornecedor-cnpj">${processo.cpfCnpj}</div>
-                </div>
-              </td>
+              <td>${processo.dataProtocolo}</td>
               <td>
                 <div class="objeto-info" title="${processo.objeto}">
                   ${truncateText(processo.objeto, 60)}
@@ -101,13 +104,13 @@ export function TabelaResultados(searchParams: any): HTMLElement {
                   ${processo.situacao}
                 </span>
               </td>
-              <td class="valor-info">${processo.valor}</td>
+              <td>${processo.modalidade}</td>
               <td>
                 <button 
                   class="btn btn-primary btn-sm"
                   onclick="navegarParaDetalhes('${processo.id}')"
                 >
-                  Ver Detalhes
+                  Detalhes
                 </button>
               </td>
             </tr>
@@ -150,8 +153,6 @@ function filtrarProcessos(searchParams: any): any[] {
           return processo.cpfCnpj.toLowerCase().includes(searchValue);
         case "objeto":
           return processo.objeto.toLowerCase().includes(searchValue);
-        case "numeroProcessoDigital":
-          return processo.numeroProcessoDigital.toLowerCase().includes(searchValue);
         default:
           return false;
       }
